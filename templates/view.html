@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Устройства</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Отключение выделения текста */
+        body {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none;    /* Firefox */
+            -ms-user-select: none;     /* Internet Explorer/Edge */
+            user-select: none;         
+        }
+    </style>
+    <script>
+        // Отключение правой кнопки мыши
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</head>
+<body>
+    <header class="header">
+        <h1><a href="/" class="logo">PON</a></h1> 
+        <nav>
+            <a href="/view">УСТРОЙСТВА</a>
+            <a href="/monitor">МОНИТОРИНГ</a>
+            {% if session.username %}
+                <a href="/forum">ФОРУМ</a>
+                <a href="/logout">ВЫХОД</a>
+            {% else %}
+                <a href="/register">РЕГИСТРАЦИЯ</a>
+                <a href="/login">ВХОД</a>
+            {% endif %}
+        </nav>
+    </header>
+    
+    <main>
+        <h1>Устройства</h1>
+        
+        <!-- Введение -->
+        <section>
+            <h2>Введение</h2>
+            <p>
+                Добро пожаловать в просмотр PON устройств. Здесь вы можете фильтровать устройства и находить интересующие вас PON-головы. Пожалуйста, введите hostname, вендора или группу ниже, чтобы начать поиск.
+            </p>
+        </section>
+        
+        <form method="get" action="{{ url_for('view.view') }}" class="search-form">
+            <input type="text" name="search_host" placeholder="Hostname" value="{{ request.args.get('search_host', '') }}">
+            <input type="text" name="search_type" placeholder="Вендор" value="{{ request.args.get('search_type', '') }}">
+            <select name="search_group">
+                <option value="">Выберите группу</option>
+                {% for group in groups %}
+                    <option value="{{ group.zbxgroup }}">{{ group.zbxgroup }}</option>
+                {% endfor %}
+            </select>
+            
+            <button type="submit">Поиск</button>
+        </form>
+
+        <!-- База данных -->
+        <section>
+            <table border="1">
+                <tr>
+                    <th>Хост</th>
+                    <th>Тип</th>
+                    <th>IP-адреса</th>
+                    <th>Группа</th>
+                </tr>
+                {% set current_host = None %}
+                {% for row in results %}
+                    {% if current_host != row.host %}
+                        {% if not loop.first %}
+                            <td colspan="3"></td> <!-- Пустая ячейка для предыдущего хоста -->
+                        {% endif %}
+                        <tr>
+                            <td>{{ row.host }}</td>
+                            <td>{{ row.type }}</td>
+                            <td>{{ row.ip }}</td>
+                            <td>{{ row.group }}</td>
+                        </tr>
+                        {% set current_host = row.host %}
+                    {% else %}
+                        <tr>
+                            <td></td> <!-- Пустая ячейка для хоста -->
+                            <td></td> <!-- Пустая ячейка для типа -->
+                            <td>{{ row.ip }}</td> <!-- Отображаем IP-адрес -->
+                            <td>{{ row.group }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+            <!-- Кнопка "Назад" -->
+        <a href="{{ url_for('monitor.monitor') }}" class="back-button">Назад</a>
+        </section>
+        
+    </main>
+</body>
+</html>

@@ -1,0 +1,276 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    height: 100vh; /* Full height of the viewport */
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #1F2226, #1F2226);
+    color: #333;
+}
+
+.header {
+    width: 200px; /* Fixed width for the header */
+    padding: 30px 20px; 
+}
+
+.header nav {
+    display: flex;
+    flex-direction: column; 
+}
+
+.header a {
+    text-align: left;
+    text-decoration: none;
+    color: #fff;
+    padding: 15px 20px;
+    width: 100%; /* Make links take full width of the header */
+    font-size: 1.2rem;
+    transition: color 0.3s; /* Убрано изменение фона */
+}
+
+.header a:hover {
+    color: #6A7EFF; /* Цвет текста при наведении */
+}
+
+.logo {
+    color: #6A7EFF;
+    padding: 0px 0; /* Убрано лишнее пространство */
+    font-size: 2rem; /* Исправлено: убрано лишнее пространство */
+    text-align: left;
+    text-decoration: none; 
+}
+
+main {
+    color: white;
+    flex: 1; /* Take the remaining space */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to the left */
+    justify-content: flex-start; /* Align items to the top */
+    padding: 20px; 
+    margin-left: 50px;
+    
+}
+
+h1 {
+    color:#5A6EDD;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* Стили для таблицы */
+table {
+    color: #333;
+    width: 100%; /* Устанавливаем ширину таблицы на 100% */
+    min-width: auto; /* Максимальная ширина таблицы */
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    background-color: #fff; /* Белый фон для таблицы */
+    border-radius: 5px; /* Закругленные углы */
+    overflow: hidden; /* Скрыть переполнение */
+}
+
+th, td {
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Полупрозрачные границы */
+    padding: 12px; /* Увеличенные отступы */
+    text-align: left;
+}
+
+
+
+/* Медиа-запрос для мобильных устройств */
+@media (max-width: 600px) {
+    table {
+        width: 100%; /* На мобильных устройствах таблица занимает 100% ширины */
+        overflow-x: auto; /* Добавляем горизонтальную прокрутку, если необходимо */
+        display: block; /* Делаем таблицу блочным элементом для прокрутки */
+    }
+
+    th, td {
+        display: block; /* Делаем ячейки блочными элементами */
+        width: 100%; /* Устанавливаем ширину ячеек на 100% */
+    }
+}
+
+
+/* Стили для форм */
+form.search-form {
+    display: flex; /* Используем flexbox для расположения элементов в строку */
+    align-items: center; /* Выравнивание по центру по вертикали */
+    margin-top: 20px; /* Отступ сверху */
+}
+
+input[type="text"] {
+    padding: 10px;
+    width: 80%; /* Ширина поля ввода */
+    margin-right: 10px; /* Отступ справа от поля ввода */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #6A7EFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #5A6EDD;
+}
+
+/* Стили для сообщений */
+form {
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Padding inside the form */
+    margin-top: 20px; /* Space above the form */
+    width: auto; /* Fixed width for the form */
+}
+
+form div {
+    margin-bottom: 15px; /* Space between form fields */
+}
+
+form label {
+    display: block; /* Make labels block elements */
+    margin-bottom: 5px; /* Space below labels */
+    color: #fff; /* Label color */
+}
+
+form input[type="text"],
+form input[type="password"] {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding inside input fields */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #fff; /* White background for input fields */
+    color: #333; /* Text color */
+}
+
+form input[type="submit"] {
+    background-color: #6A7EFF; /* Button color */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    padding: 10px; /* Padding inside button */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+form input[type="submit"]:hover {
+    background-color: #5A6EDD; /* Darker shade on hover */
+}
+
+ul {
+    list-style-type: none; /* Remove bullet points */
+    margin-top: 10px; /* Space above the list */
+}
+
+ul li {
+    color: #6A7EFF; /* Error message color */
+}
+
+/* Стили для картинки */
+img {
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #6A7EFF;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Дополнительные стили для улучшения интерфейса */
+button:focus, input[type="text"]:focus {
+    outline: none;
+    border: 2px solid #6A7EFF; /* Подсветка при фокусе */
+}
+
+
+p {
+    margin: 10px 0; /* Упрощение отступов для параграфов */
+    line-height: 1.5; /* Улучшение читаемости текста */
+}
+.link-container {
+    margin-top: 20px;
+}
+
+.link-container a {
+    text-decoration: none;
+    color: #4a90e2; /* Нейтральный синий цвет */
+    margin: 0 10px;
+    font-size: 0.9rem; /* Уменьшенный размер шрифта */
+    transition: color 0.3s;
+}
+
+.link-container a:hover {
+    color: #357ab8; /* Темнее при наведении */
+}
+
+
+
+
+.back-button {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    display: inline-block; /* Чтобы кнопка выглядела как блок */
+    padding: 10px 10px; /* Отступы */
+    background-color: #6A7EFF; /* Цвет фона */
+    color: white; /* Цвет текста */
+    text-decoration: none; /* Убираем подчеркивание */
+    border-radius: 4px; /* Закругленные углы */
+    transition: background-color 0.3s, transform 0.3s; /* Плавные переходы */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень */
+}
+
+.back-button:hover {
+    background-color: #5A6EDD; /* Цвет фона при наведении */
+    transform: translateY(-2px); /* Подъем кнопки при наведении */
+}
+
+.back-button:active {
+    transform: translateY(0); /* Возврат в исходное положение при нажатии */
+}
+
+
+
+
+
+/* Стили для полей ввода */
+.search-form input[type="text"],
+.search-form select {
+    background-color: white;
+    color:#333;
+    padding: 10px;
+    width: auto;
+    margin-right: 10px; /* Отступ справа от поля ввода */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+
+.info-block {
+    background-color:#333;
+   
+    border: 1px solid #6A7EFF; /* Граница */
+    border-radius: 8px; /* Закругленные углы */
+    padding: 20px; /* Отступы внутри блока */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Тень */
+    margin-top: 20px; /* Отступ сверху */
+    margin-bottom: 20px;
+}
+
+.info-block p {
+    margin: 0; /* Убираем отступы у параграфа */
+    color:#f7f7f7; 
+}

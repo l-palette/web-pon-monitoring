@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мониторинг</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Отключение выделения текста */
+        body {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none;    /* Firefox */
+            -ms-user-select: none;     /* Internet Explorer/Edge */
+            user-select: none;         
+        }
+    </style>
+    <script>
+        // Отключение правой кнопки мыши
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</head>
+<body>
+    <header class="header">
+        <h1><a href="/" class="logo">PON</a></h1> 
+        <nav>
+            <a href="/view">УСТРОЙСТВА</a>
+            <a href="/monitor">МОНИТОРИНГ</a>
+            {% if session.username %}
+                <a href="/forum">ФОРУМ</a>
+                <a href="/logout">ВЫХОД</a>
+            {% else %}
+                <a href="/register">РЕГИСТРАЦИЯ</a>
+                <a href="/login">ВХОД</a>
+            {% endif %}
+        </nav>
+    </header>
+    
+    <main>
+        <h1>PON-Мониторинг</h1>
+        
+        <!-- Введение -->
+        <section>
+            <h2>Введение</h2>
+            <p>
+                Добро пожаловать в систему мониторинга PON. Здесь вы можете просматривать информацию об оптических уровнях устройств, подключенных к PON-головам по лицевому счету. 
+                Пожалуйста, введите лицевой счет в поле ниже, чтобы начать поиск.
+            </p>
+        </section>
+        
+        <form method="get" action="{{ url_for('monitor.monitor') }}" class="search-form">
+            <input type="text" name="search_licence" id="search_licence" placeholder="Лицевой счет" value="{{ request.args.get('search_licence', '') }}">
+            <button type="submit">Поиск</button>
+        </form>
+
+        <!-- База данных -->
+        <section>
+            <table border="1">
+                <tr>
+                    <th>Лицевой счет</th>
+                    <th>Hostname PON-головы</th>
+                    <th>Имя интерфейса</th>
+                </tr>
+                {% for row in results %}
+                <tr>
+                    <td>{{ row.description }}</td>
+                    <td>{{ row.ip }}</td>
+                    <td>{{ row.interfacename }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="2">Устройства не найдены</td>
+                </tr>
+                {% endfor %}
+            </table>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul>
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            
+            <!-- Кнопку видно, только если действие выполнено-->
+            {% if request.args.get('search_licence', '') %}
+            <form action="{{ url_for('monitor.update') }}" method="POST" id="updateForm">
+                <input type="hidden" name="search_licence" value="{{ request.args.get('search_licence', '') }}">
+                <button type="submit">Посмотреть изменение уровней</button>
+            </form>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>

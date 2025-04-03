@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /404.html
+Sitemap: http://84.201.169.171:5001/sitemap.xml  

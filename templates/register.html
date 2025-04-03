@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Отключение выделения текста */
+        body {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none;    /* Firefox */
+            -ms-user-select: none;     /* Internet Explorer/Edge */
+            user-select: none;         
+        }
+    </style>
+    <script>
+        // Отключение правой кнопки мыши
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</head>
+<body>
+    <header class="header">
+        <h1><a href="/" class="logo">PON</a></h1> 
+        <nav>
+            <a href="/view">УСТРОЙСТВА</a>
+            <a href="/monitor">МОНИТОРИНГ</a>
+            {% if session.username %}
+                <a href="/forum">ФОРУМ</a>
+                <a href="/logout">ВЫХОД</a>
+            {% else %}
+                <a href="/register">РЕГИСТРАЦИЯ</a>
+                <a href="/login">ВХОД</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+    <h2>Регистрация</h2>
+    
+    <form method="POST" action="{{ url_for('register.register') }}">
+        {{ form.hidden_tag() }}
+        <div>
+            <label for="username">Имя пользователя:</label>
+            {{ form.username(size=32) }}
+        </div>
+        <div>
+            <label for="password1">Пароль:</label>
+            {{ form.password1(size=32) }}
+        </div>
+        <div>
+            <label for="password2">Подтвердите пароль:</label>
+            {{ form.password2(size=32) }}
+        </div>
+        <div>
+            <input type="submit" value="Зарегистрироваться">
+        </div>
+    </form>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+</main>
+</body>
+</html>

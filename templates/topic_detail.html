@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ topic.subject }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>{{ topic.subject }}</h1>
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <h2>Replies</h2>
+    <ul>
+        {% for reply in replies %}
+            <li><strong>{{ reply.author }}</strong>: {{ reply.content }}</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Form to post a reply -->
+    <h2>Post a Reply</h2>
+    <form method="POST">
+        {{ reply_form.hidden_tag() }}
+        <div>
+            {{ reply_form.content.label }}<br>
+            {{ reply_form.content(rows=5, cols=40) }}<br>
+            {% for error in reply_form.content.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div>
+            {{ reply_form.submit() }}
+        </div>
+    </form>
+
+    <a href="{{ url_for('forum.forum') }}">Back to Forum</a>
+</body>
+</html>

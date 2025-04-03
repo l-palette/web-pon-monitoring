@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мониторинг уровней PON</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Отключение выделения текста */
+        body {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none;    /* Firefox */
+            -ms-user-select: none;     /* Internet Explorer/Edge */
+            user-select: none;         
+        }
+    </style>
+    <script>
+        // Отключение правой кнопки мыши
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</head>
+<body>
+    <header class="header">
+        <h1><a href="/" class="logo">PON</a></h1> 
+        <nav>
+            <a href="/view">УСТРОЙСТВА</a>
+            <a href="/monitor">МОНИТОРИНГ</a>
+            {% if session.username %}
+                <a href="/forum">ФОРУМ</a>
+                <a href="/logout">ВЫХОД</a>
+            {% else %}
+                <a href="/register">РЕГИСТРАЦИЯ</a>
+                <a href="/login">ВХОД</a>
+            {% endif %}
+        </nav>
+    </header>  
+    <main>
+    <h1>Сообщения</h1>
+    <h2>Форма отправки</h2>
+    <form method="POST">
+        {{ message_form.hidden_tag() }}
+        <div>
+            {{ message_form.username.label }}<br>
+            {{ message_form.username(size=40) }}<br>
+            {% for error in message_form.username.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div>
+            {{ message_form.content.label }}<br>
+            {{ message_form.content(size=40) }}<br>
+            {% for error in message_form.content.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div>
+            {{ message_form.submit() }}
+        </div>
+    </form>
+
+    <h2>Все сообщения</h2>
+    <ul>
+        {% for message in messages %}
+            <li><strong>{{ message.author }}</strong>: {{ message.content }} - {{ format_timestamp(message.time) }}</li>
+        {% endfor %}
+    </ul>
+    
+    </main>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мониторинг уровней PON</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Отключение выделения текста */
+        body {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none;    /* Firefox */
+            -ms-user-select: none;     /* Internet Explorer/Edge */
+            user-select: none;         
+        }
+    </style>
+    <script>
+        // Отключение правой кнопки мыши
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</head>
+<body>
+    <header class="header">
+        <h1><a href="/" class="logo">PON</a></h1> 
+        <nav>
+            <a href="/view">УСТРОЙСТВА</a>
+            <a href="/monitor">МОНИТОРИНГ</a>
+            {% if session.username %}
+                <a href="/forum">ФОРУМ</a>
+                <a href="/logout">ВЫХОД</a>
+            {% else %}
+                <a href="/register">РЕГИСТРАЦИЯ</a>
+                <a href="/login">ВХОД</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        <h1>График оптических уровней</h1>
+        
+        {% if plot_filename %}
+            <img src="{{ url_for('static', filename=plot_filename) }}" alt="График" style="max-width: 100%; height: auto;">
+        {% else %}
+            <p>График не доступен. Пожалуйста, выберите лицевой счет и создайте график.</p>
+        {% endif %}
+        
+        <a href="{{ url_for('monitor.monitor') }}" class="back-button">Назад</a>
+
+    </main>
+</body>
+</html>
