@@ -1,3 +1,8 @@
 .idea
 .DS_Store
 __pycache__
+forum/__pycache__
+login/__pycache__
+monitor/__pycache__
+register/__pycache__
+view/__pycache__
